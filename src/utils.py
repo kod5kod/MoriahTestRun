@@ -1,3 +1,5 @@
+import tensorflow as tf
+import torch
 
 def get_best_torch_device():
     """Get the best available PyTorch device.
