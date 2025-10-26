@@ -44,12 +44,13 @@ np.random.seed(config["seed"])
 
 
 ## FINDING BEST TORCH/TF DEVICE
-utils.print_section("Preprocessing TabGenBench pipeline.")
+utils.print_section("See available devices and select best Torch device.")
 
-
+# Get best Torch device:
 device_torch = utils.get_best_torch_device()
-# Log the device being used
-utils.log_available_tf_device()
+
+# Log the TF device being used:
+# utils.log_available_tf_device()
 
 ## Exit
 utils.print_section("Done with program, exiting")

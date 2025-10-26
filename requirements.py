@@ -1,1 +1,3 @@
 tomli
+numpy
+torch
