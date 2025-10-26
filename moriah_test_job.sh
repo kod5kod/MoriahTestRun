@@ -8,5 +8,5 @@
 
 source  ~/.zshrc
 micromamba activate moriahtestrun
-python3 /sci/labs/yuvalb/[user_name]/repos/MoriahTestRun/main.py
+python3 /sci/labs/yuvalb/[user_name]/repos/MoriahTestRun[fork]/main.py
 

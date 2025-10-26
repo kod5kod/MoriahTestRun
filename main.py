@@ -1,7 +1,12 @@
-import socket
+import os
 import random
-import tomli
+import socket
 from pprint import pp
+
+import numpy as np
+import tomli
+import torch
+
 import src.utils as utils
 
 ##########################################
@@ -13,7 +18,6 @@ import src.utils as utils
 ##########################################
 
 
-
 ## Configuration
 utils.print_section("Setting up configuration and paths.")
 
@@ -22,19 +26,19 @@ computer_name = socket.gethostname()
 print(f"\nComputer/node Name: {computer_name}\n")
 
 # Load configuration file
-config_file_path = "CONFIG.toml"
+config_file_path = "config.toml"
 with open(config_file_path, "rb") as f:
     config = tomli.load(f)
 
 # Set data and output paths based on computer name (Local vs Moriah)
 if computer_name in config["local"]["local_computer_name"]:
     config["data_path"] = config["local"]["data_path"]
-    config["output_path"] = os.path.join(config["local"]["output_path"], config["date"], config["dataset_name"])
+    config["output_path"] = os.path.join(config["local"]["output_path"])
 elif any(
     item in computer_name for item in config["moriah"]["moriah_node_types"]
 ):  # computer_name in config["moriah"]["moriah_node_types):
     config["data_path"] = config["moriah"]["data_path"]
-    config["output_path"] = os.path.join(config["moriah"]["output_path"], config["date"], config["dataset_name"])
+    config["output_path"] = os.path.join(config["moriah"]["output_path"])
 
 pp(config)
 
