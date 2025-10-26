@@ -136,14 +136,22 @@ A quick end-to-end walkthrough of using the Moriah's cluster.
 
 ## Miscellaneous
 
-### Moria Available resources:
+### Moria's Available resources:
 
-Goldfish: h200
-Salmon: L40s
-catfish: L4
+**GPU**:  
+    Goldfish: h200 (141 GB).     
+    Salmon: L40s (48 GB).   
+    catfish: L4 (24 GB).  
+     
+**CPU**:  
+    glacier
 
+    The H200 is for high-performance AI training and HPC, the L40S is a versatile GPU for AI, graphics, and visualization, and the L4 is a low-power, cost-effective GPU primarily for AI inference. The main difference is performance and power, with the H200 offering the most computational power, followed by the L40S, while the L4 focuses on efficiency for inference tasks. 
+
+    
 
 ###  MAMBA INSTALLATION (recommended for Cluster use because it is fast and light-weight):
+
 ```
 curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
 ./bin/micromamba shell init -s zsh -r ~/micromamba          # # this is for using the zsh shell, which became the default
