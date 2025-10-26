@@ -1,0 +1,13 @@
+
+# General configs:
+seed = 420  # setting seed for reproducibility
+
+[local]
+data_path = "/Users/[username]/Documents/datasets"
+output_path = "/Users/[username]/Documents/synthetics"
+local_computer_name = ["leeputer.local","Mac.routerlogin.net"]
+
+[moriah]
+data_path = "/sci/labs/yuvalb/[username]/data/"
+output_path = "/sci/labs/yuvalb/[username]/output"
+moriah_node_types = ["catfish","salmon","goldfish","dogfish","glacier"]

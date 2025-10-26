@@ -4,6 +4,14 @@
 A quick end-to-end walkthrough of using the Moriah's cluster. 
 ```
 
+## ⚠️ Prerequisites
+
+    1. A GitHub account (or other git service account)
+    2. Conda/virtualenv/other python library management package
+    3. Access to the Moriah's cluster (see miscellaneous section below)
+    4. Git setup in your lab folder of Moriah
+    5. Micromamba on the Moriah's cluster (see instructions in Miscellaneous Section below)
+
 
 ## 🔍 Instructions 
 
@@ -39,9 +47,7 @@ A quick end-to-end walkthrough of using the Moriah's cluster.
     `micromamba create -n moriahtestrun python=3.13`
     `micromamba activate moriahtestrun`
 
-
     
-
 4. Install dependencies:
 
     `pip install -r [lib PATH]/requirements.txt`
@@ -51,17 +57,43 @@ A quick end-to-end walkthrough of using the Moriah's cluster.
     `ipython kernel install --user --name=moriahtestrun` # adding the kernel to jupyter notebook/lab`
 
 
+6. Identify your local computer socket host name:
 
-6. Run the following command to run the script (inside the venv):
+    ```
+    import socket
+    computer_name = socket.gethostname()
+    print(f"\nComputer/node Name: {computer_name}\n")
+    ```
+
+7. Edit the `config.json` file according to your user_name and computer_name.
+
+
+8. Run the following command to run the script (inside the venv):
 
     `python [lib PATH]/main.py`
 
 
+9. Commit and push your changes to github. 
+
+    ```
+    git add .
+    git commit -m "commit message"
+    git push
+    ```
+
+
 ### B) Moriah's Cluster Installation
 
+    Because the master node is only used for light operations, 
+    we will request an interactive session to perform the steps below:
+
+    `srun --mem=10G --pty bash  # Request an interactive session`
+    When done:
+    `exit`
 
 1. Run the following command to clone the forked repository:
 
+    
     ```
     cd /sci/labs/yuvalb/lee.carlin/[user-name]/ # your Yuval's lab directory
     git clone https://github.com/[username]/MoriahTestRunFork.git
@@ -85,12 +117,16 @@ A quick end-to-end walkthrough of using the Moriah's cluster.
 
     `sbatch [lib PATH]/sbatch.sh`
 
+6. Check the output file and resource utilization:
+
+    `cat /sci/labs/yuvalb/[user-name]/output/[jobname]_[jobid].out`
+    `seff <jobid>`
 
 
 
 
 
-
+## Miscellaneous
 
 
 
@@ -102,13 +138,69 @@ curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/mi
 source ~/.zshrc
 ```
 
+### zshrc alias setup:
+
+```
+alias lab='cd ~/sci/labs/yuvalb/[user_name]'
+alias jobs='squeue | grep "user"'
+```
+
+### Interactive jbos:
+```
+srun --mem=10G --pty bash 
+srun --gres=gpu:l40s:1 --pty bash # GPU based
+```
+
+## Clear user's cache:
+`find ~/.cache/ -type f -atime +0 -delete`
+Where +0 refers to files accessed in the last 24 hours and more. 
+Change the number to the number of days you want to delete.
+
+
+## Moriah's SSH Config
+
+    For ease of SSHing into Moriah, add the following to your `~/.ssh/config` file:
+    (Don't forget to `source ~/.ssh/config` after adding it)
+
+    ```
+    ## Moriah config
+    # Prevent disconnections
+    Host *
+        ServerAliveInterval 180
+        ServerAliveCountMax 4
+
+    # Configure jump host (for external access)
+    Host hurcs-proxy
+        User [user_name]
+        HostName bava.cs.huji.ac.il
+        Port 22
+
+    # Configure cluster access
+    Host moriah
+        User [user_name]
+        HostName moriah-gw.cs.huji.ac.il
+        Port 22
+        # Comment out ProxyJump when on university network
+        ProxyJump hurcs-proxy
+
+    Host moriah-tunnel
+        User [user_name]
+        HostName moriah-gw.cs.huji.ac.il
+        Port 22
+        ProxyJump hurcs-proxy
+        LocalForward 12345 moriah-gw:22
+    ```
 
 
 
 
 
+## Changelog
 
-## 🧪 Quick Start
+## 📌 0.1   2025-10-26
+* Adding a base walkthrough for Hello world 
+* Added Miscellaneous
+* First working version
 
 
 
