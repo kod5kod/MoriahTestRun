@@ -115,11 +115,19 @@ A quick end-to-end walkthrough of using the Moriah's cluster.
 
 5. Run `sbatch` script:
 
-    `sbatch [lib PATH]/sbatch.sh`
+    `sbatch [lib PATH]/sbatch.sh` 
+
+    Review using:  
+    `sacct`
+
+    `squeue | grep [user_name]`
+
+    `cat /sci/labs/yuvalb/[user-name]/output/[jobname]_[jobid].out`
 
 6. Check the output file and resource utilization:
 
     `cat /sci/labs/yuvalb/[user-name]/output/[jobname]_[jobid].out`
+
     `seff <jobid>`
 
 
@@ -128,6 +136,11 @@ A quick end-to-end walkthrough of using the Moriah's cluster.
 
 ## Miscellaneous
 
+### Moria Available resources:
+
+Goldfish: h200
+Salmon: L40s
+catfish: L4
 
 
 ###  MAMBA INSTALLATION (recommended for Cluster use because it is fast and light-weight):
